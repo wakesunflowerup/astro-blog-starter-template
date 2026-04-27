@@ -1,17 +1,20 @@
 ---
 interface Props {
-	date: Date;
+	date: Date | string;
+	locale?: string; // 改为 string，更灵活
 }
 
-const { date } = Astro.props;
+const { date: inputDate, locale = "zh-CN" } = Astro.props;
+const date = typeof inputDate === "string" ? new Date(inputDate) : inputDate;
+
+// 使用通用的格式
+const options: Intl.DateTimeFormatOptions = {
+	year: "numeric",
+	month: locale.startsWith("zh") ? "long" : "short",
+	day: "numeric",
+};
 ---
 
 <time datetime={date.toISOString()}>
-	{
-		date.toLocaleDateString('en-us', {
-			year: 'numeric',
-			month: 'short',
-			day: 'numeric',
-		})
-	}
+	{date.toLocaleDateString(locale, options)}
 </time>
