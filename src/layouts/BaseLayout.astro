@@ -15,6 +15,15 @@ const { title, description } = Astro.props;
 <html lang="zh-CN">
     <head>
         <BaseHead title={title} description={description} />
+        <!-- 立即执行的主题初始化脚本，避免闪烁 -->
+        <script is:inline>
+            (function() {
+                const theme = localStorage.getItem('theme');
+                if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                    document.documentElement.classList.add('dark');
+                }
+            })();
+        </script>
         <style>
             /* 粘性布局样式 */
             html,
@@ -37,6 +46,8 @@ const { title, description } = Astro.props;
                 width: 100%;
                 text-align: center;
                 box-sizing: border-box;
+                /* 确保 main 区域没有独立背景，继承 body 的背景 */
+                background: transparent;
             }
         </style>
     </head>

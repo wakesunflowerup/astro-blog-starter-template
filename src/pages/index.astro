@@ -5,29 +5,16 @@ import IndexImage from "../assets/tom.gif";
 ---
 
 <BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
-	<div
-		style="
-	display: flex;
-	gap: 0.5em;
-	justify-content: center;
-	margin: 1em auto 1em;
-"
-	>
+	<div class="image-container">
 		<img src={IndexImage.src} alt="图1" />
 		<img src={IndexImage.src} alt="图2" />
 	</div>
-	<div style="text-align: center;">
+	<div class="content-wrapper">
 		<h1>🔆此页面光芒万丈🕶</h1>
 		<p>该博客是由Cloudflare大善人亲自扛着服务器在边缘节点上跑出来的。</p>
 
-		<div
-			style="
-            display: inline-block;
-            text-align: left;
-            margin: 1.5em 0;
-        "
-		>
-			<ul style="margin: 0; padding-left: 1.5em;">
+		<div class="feature-list">
+			<ul>
 				<li>全站向阳：这里的Bug都被天帝的圣光净化了（大概吧）。</li>
 				<li>极速体验：Astro引擎，快到让浏览器幻视IE老祖宗。</li>
 			</ul>
@@ -36,3 +23,27 @@ import IndexImage from "../assets/tom.gif";
 		<p>随意坐，别客气，这里的带宽不要钱（感谢大善人！）。</p>
 	</div>
 </BaseLayout>
+
+<style>
+	.image-container {
+		display: flex;
+		gap: 0.5em;
+		justify-content: center;
+		margin: 1em auto 1em;
+	}
+	
+	.content-wrapper {
+		text-align: center;
+	}
+	
+	.feature-list {
+		display: inline-block;
+		text-align: left;
+		margin: 1.5em 0;
+	}
+	
+	.feature-list ul {
+		margin: 0;
+		padding-left: 1.5em;
+	}
+</style>

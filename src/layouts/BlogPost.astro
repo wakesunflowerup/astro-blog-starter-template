@@ -13,8 +13,16 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 <html lang="zh-CN">
 	<head>
 		<BaseHead title={title} description={description} />
+		<!-- 立即执行的主题初始化脚本，避免闪烁 -->
+		<script is:inline>
+			(function() {
+				const theme = localStorage.getItem('theme');
+				if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+					document.documentElement.classList.add('dark');
+				}
+			})();
+		</script>
 		<style>
-			/* === 添加这部分 === */
 			html,
 			body {
 				height: 100%;
@@ -26,13 +34,13 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 				flex-direction: column;
 				min-height: 100vh;
 			}
-			/* ================== */
 
 			main {
 				width: calc(100% - 2em);
 				max-width: 100%;
 				margin: 0;
-				flex: 1; /* 添加这一行，让 main 区域自动扩展 */
+				flex: 1;
+				background: transparent;
 			}
 
 			/* 其余样式保持不变 */
@@ -50,7 +58,7 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 				max-width: calc(100% - 2em);
 				margin: auto;
 				padding: 1em;
-				color: rgb(var(--gray-dark));
+				color: var(--text-color);
 			}
 			.title {
 				margin-bottom: 1em;
@@ -60,6 +68,7 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 			}
 			.title h1 {
 				margin: 0 0 0.5em 0;
+				color: rgb(var(--black));
 			}
 			.date {
 				margin-bottom: 0.5em;

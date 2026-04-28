@@ -15,9 +15,20 @@ const posts = (await getCollection("blog")).sort(
 <html lang="zh-CN">
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<!-- 立即执行的主题初始化脚本，避免闪烁 -->
+		<script is:inline>
+			(function() {
+				const theme = localStorage.getItem('theme');
+				if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+					document.documentElement.classList.add('dark');
+				}
+			})();
+		</script>
 		<style>
 			main {
 				width: 960px;
+				/* 确保 main 区域没有独立背景 */
+				background: transparent;
 			}
 			ul {
 				display: flex;
@@ -56,14 +67,16 @@ const posts = (await getCollection("blog")).sort(
 				margin: 0;
 				color: rgb(var(--black));
 				line-height: 1;
+				transition: color 0.3s ease;
 			}
 			.date {
 				margin: 0;
 				color: rgb(var(--gray));
+				transition: color 0.3s ease;
 			}
 			ul li a:hover h4,
 			ul li a:hover .date {
-				color: rgb(var(--accent));
+				color: var(--accent);
 			}
 			ul a:hover img {
 				box-shadow: var(--box-shadow);
